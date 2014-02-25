@@ -11,26 +11,28 @@ bool isPalindromic (int number);
 bool isPalindromic (int number){
     bool palindromic = true;
     int length = 0;
-    //We are going to save the last digit first
-    int digits [1000];
+    //We are going to save the last digit first, and we are going to limit to 7 digits. (our max is 999; so 999*999 is under 7 digits)
+    int digits [7];
     int numberAux = number;
-    bool continue = true;
-    while (continue){
-        digits[i] = numberAux % 10;
+    bool continuar = true;
+    int aux = 0;
+    while (continuar){
+        digits[aux] = numberAux % 10;
         numberAux = numberAux / 10;
         length++;
-        if (numberAux == 0) continue = false;
+        aux++;
+        if (numberAux == 0) continuar = false;
     }
-    continue = true;
-    int aux = 0;
-    while (continue){
+    continuar = true;
+    aux = 0;
+    while (continuar){
         if (digits[aux] != digits[length - aux - 1]) {
-            continue = false;
+            continuar = false;
             palindromic = false;
         }
         aux++;
         if (aux == length / 2)
-            continue = false;
+            continuar = false;
     }
     
     return palindromic;	
@@ -41,27 +43,27 @@ using namespace std;
 
 int main()
 {
-    long long solution = 0;
-    long long min = 100;
+    int solution = 0;
+    int min = 100;
     bool continuar = true;
     int number = 999;
-    int numberAux = 999;
     while (continuar){
         bool continuar2 = true;
+        int numberAux = 999;
         while (continuar2){
-            if (isPalindromic(number * numberAux)){
-                continuar2 = false;
-                continuar= false;
-                solution = 
+        	int aux = number * numberAux;
+            if (isPalindromic(aux)){
+                if (aux > solution)
+                	solution = aux;
             }
+            numberAux--;
+            if (numberAux == min) continuar2=false;
         }
+        number--;
+        if (number == min) continuar2=false;
     }
     
-    if (solution == 0) 
-        printf("600851475143 is not prime");
-    else {
-        printf("pedo");
-        printf("Solution =  %l", solution);} 
+   	printf("Solution =  %i", solution);
    
    return 0;
 }
