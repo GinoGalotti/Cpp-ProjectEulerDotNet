@@ -12,35 +12,35 @@ Find the difference between the sum of the squares of the first one hundred natu
 */
  
 #include <iostream>
-int sumOfSquare(int minRange, int maxRange)
+long sumOfSquare(int minRange, int maxRange)
 {
-    int result = 0;
+    long result = 0;
        for (int i = minRange; i<=maxRange; i++){
-           result += i * i;
+           result = result + i * i;
        }
     return result;
 }
  
-int squareOfSum(int minRange, int maxRange)
+long squareOfSum(int minRange, int maxRange)
 {
-    int result; 
-    int sum = minRange + maxRange; 
+    long result; 
+    long sum = minRange + maxRange; 
     if (sum % 2){
         result =  (minRange + maxRange - 1) * sum / 2;
     }
     else {
         result = ((minRange + maxRange ) * (sum / 2 - 1)) + (sum / 2) ;
     }
-    return result; 
+    return result * result; 
 }
  
 using namespace std;
 
 int main()
 {
-    int solution = sumOfSquare(1, 100) - squareOfSum(1, 100);
+    long solution = squareOfSum(1, 100) - sumOfSquare(1, 100);
     
-   	printf("Solution =  %i", solution);
+   	printf("Solution =  %lu", solution);
    
    return 0;
 }
