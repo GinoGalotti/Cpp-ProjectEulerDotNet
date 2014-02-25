@@ -4,66 +4,50 @@
 
 Find the largest palindrome made from the product of two 3-digit numbers.
 */
- 
-#include <iostream>
-bool isPalindromic (int number);
 
-bool isPalindromic (int number){
-    bool palindromic = true;
-    int length = 0;
-    //We are going to save the last digit first, and we are going to limit to 7 digits. (our max is 999; so 999*999 is under 7 digits)
-    int digits [7];
-    int numberAux = number;
-    bool continuar = true;
-    int aux = 0;
-    while (continuar){
-        digits[aux] = numberAux % 10;
-        numberAux = numberAux / 10;
-        length++;
-        aux++;
-        if (numberAux == 0) continuar = false;
-    }
-    continuar = true;
-    aux = 0;
-    while (continuar){
-        if (digits[aux] != digits[length - aux - 1]) {
-            continuar = false;
-            palindromic = false;
-        }
-        aux++;
-        if (aux == length / 2)
-            continuar = false;
-    }
-    
-    return palindromic;	
- 
-}
-
+#include <stdio.h>
+#include <string>
+#include <sstream>
 using namespace std;
+
+const int NUMBER_MIN= 100;
+const int NUMBER_MAX= 999;
+
+string toString(int number)
+   {
+   ostringstream s;
+   string cad = "";
+   if (s << number)
+      cad = s.str();
+
+   return cad;
+   }
+
+bool isPalindrome(const string& p_str) {
+
+   int length = p_str.size();
+   bool palindrome = true;
+
+   for (int i = 0; i < length/2; i++){
+    if (p_str[i] != p_str[length - 1 - i]) palindrome = false;
+   }
+
+   return palindrome;
+}
 
 int main()
 {
-    int solution = 0;
-    int min = 100;
-    bool continuar = true;
-    int number = 999;
-    while (continuar){
-        bool continuar2 = true;
-        int numberAux = 999;
-        while (continuar2){
-        	int aux = number * numberAux;
-            if (isPalindromic(aux)){
-                if (aux > solution)
-                	solution = aux;
-            }
-            numberAux--;
-            if (numberAux == min) continuar2=false;
-        }
-        number--;
-        if (number == min) continuar2=false;
-    }
-    
+    int i, j, product, solution = 0;
+     for (i = NUMBER_MAX; i >= NUMBER_MIN; i--)
+       {
+          for (j = NUMBER_MAX; j >= NUMBER_MIN; j--)
+          {
+             product = i*j;
+             if (isPalindrome(toString(product)) and (product > solution))
+                {solution = product;}
+             }}
+
    	printf("Solution =  %i", solution);
-   
+
    return 0;
 }
