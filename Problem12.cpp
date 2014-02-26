@@ -19,15 +19,21 @@ What is the value of the first triangle number to have over five hundred divisor
 */
 
 #include <stdio.h>
-#include <string>
 using namespace std;
 const int MAX_DIVISORS = 500;
+
 int findDivisors(long long number){
-    int divisors = 2;
-    for (int i = 2; i + i < number; i++){
-        if (number % i == 0) divisors +=2; 
-    }
-    return divisors;
+    int divisors = 1;
+    for (int i = 2; i <= number; i++)
+	  {
+	    int exponent = 0;
+	    while (number % i == 0) {
+	        exponent++; 
+	        number /= i;
+	    }   
+	    divisors *= (exponent+1);
+	  }
+	return divisors;
 }    
 
 int main()
@@ -54,7 +60,7 @@ int main()
    long long number;
    bool continuar = true;
    while (continuar){
-       number = i*(i+1) / 2;
+       number = (i*i+i) / 2;
        if (findDivisors(number) >= MAX_DIVISORS){
            continuar = false;
        }
@@ -62,7 +68,7 @@ int main()
    }
    
    
-printf("Solution =  %llu", number);
+  printf("Solution =  %llu", number);
 
    return 0;
 }
