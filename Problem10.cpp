@@ -11,7 +11,7 @@ bool isPrimeBiggerThan10 (long long number);
 bool isPrimeBiggerThan10 (long long number){
     long long i;
     
-    for (i=10; i<number; i++)
+    for (i=10; i * i <= number; i++)
 	{
 		if (number % i == 0)
 		{
@@ -26,16 +26,16 @@ using namespace std;
 int main()
 {
     long long solution = 0;
-    long long index = 2000000;
+    long long index;
     long long addition = 17; // 17 = 2 + 3 + 5 + 7
-    for (index; index > 10; index--){
+    for (index = 2000000; index > 10; index--){
     	if ((index % 2 != 0) and (index % 3 != 0) and (index % 5 != 0) and (index % 7 != 0)){
     		if (isPrimeBiggerThan10(index)){
     			addition += index;
     		}
     	}
     }
-    solution = number;
+    solution = addition;
    	printf("Solution =  %llu", solution);
    
    return 0;
