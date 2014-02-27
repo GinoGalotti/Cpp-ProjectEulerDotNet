@@ -29,28 +29,17 @@
 15 Lattice paths	
 
 16 Power digit sum	
-106815
- 
-17
-Number letter counts	
-70224
- 
-18
-Maximum path sum I	
-68907
- 
-19
-Counting Sundays	
-63555
- 
-20
-Factorial digit sum	
-97873
- 
-21
-Amicable numbers	
-68364
- 
+
+17 Number letter counts	
+
+18 Maximum path sum I	
+
+19 Counting Sundays	
+
+20 Factorial digit sum	
+
+21 Amicable numbers	
+
 22
 Names scores	
 63841
