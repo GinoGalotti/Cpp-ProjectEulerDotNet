@@ -21,35 +21,39 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 
 using namespace std;
 
-const int MAX_NUMBER = 1000;
+const int MAX_NUMBER = 1000000;
 
-unsigned long long lengthOfTheChain(unsigned int startingNumber){
-	unsigned long long actualNumber = startingNumber;
-	unsigned long long length = 1;
-	
+int lengthOfTheChain(long long startingNumber){
+	long long actualNumber = startingNumber;
+	int length = 1;
+
 	while (actualNumber > 1){
 		if (actualNumber % 2 == 0 ){
-			actualNumber /= 2;
-		} actualNumber = actualNumber * 3 + 1;
+			actualNumber = actualNumber / 2;
+		} else actualNumber = actualNumber * 3 + 1;
 		length++;
 	}
-	
-}	
+
+	return length + 1;
+
+}
 
 int main()
 {
-    unsigned long long solution = 0;
-    int i = MAX_NUMBER;
+    int maxLength = 0;
+    int solution;
+    long long i = MAX_NUMBER;
     if (i % 2 == 0) i--;
    	for (i ; i > 1; i = i-2){
-   		
-   		unsigned long long aux = lengthOfTheChain(i);
-   		if (aux > solution) solution = aux;
+   		int aux = lengthOfTheChain(i);
+   		if (aux > maxLength) {maxLength = aux;
+   		solution = i;
+   		}
    	}
-       	
-     
-    printf("Solution = %llu", solution );
-        
-    
+
+
+    printf("Solution = %i", solution );
+
+
     return 0;
 }
