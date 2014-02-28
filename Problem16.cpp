@@ -21,7 +21,6 @@ NOTE: Once the chain starts the terms are allowed to go above one million.
 #include <ttmath/ttmath.h>
 
 using namespace std;
-typedef ttmath::UInt<10> ReallyBigUInt;
 //TTMath use a base word number system, so if we want to handle 2^1000; we need at least 1000/32 + 1.
 const int numWordsNeeded = (1000/32) + 1;
 
