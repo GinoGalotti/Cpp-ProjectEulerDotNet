@@ -1,5 +1,6 @@
 /**
  * Solution by Luis Galotti
+ * NOTE: I'm using TTMath library to deal with really big integer numbers. You can find more information about it at: http://www.ttmath.org/
  * The following iterative sequence is defined for the set of positive integers:
 
 n → n/2 (n is even)
@@ -15,13 +16,19 @@ Which starting number, under one million, produces the longest chain?
 NOTE: Once the chain starts the terms are allowed to go above one million.
 */
 
-#include <stdio.h>
 #include <string>
 #include <sstream>
+#include <ttmath/ttmath.h>
 
 using namespace std;
+template<typename NumTy>
+string String(const NumTy& Num)
+{
+	stringstream StrStream;
+	StrStream << Num;
+	return(StrStream.str());
+}
 
-const int MAX_NUMBER = 1000000;
 
 int latticePath(int posX, int posY ){
 	int numberOfPath;
@@ -33,59 +40,56 @@ int latticePath(int posX, int posY ){
 			numberOfPath += latticePath(posX -1 , posY);
 		if (posY > 0)
 			numberOfPath += latticePath(posX , posY -1);
-		
+
 	}
 	return numberOfPath;
 }
 
 
-unsigned long long latticePathOptimized(int lengthX, int lengthY){
+ttmath::UInt<6> latticePathOptimized(int lengthX, int lengthY){
 	//The number of Paths of a Lattice path is equal to a binomial coefficent of:
-	//(x + y) 
+	//(x + y)
 	//(  x  )	=  !(x+y) / y!x!
-	unsigned long long factorialXAddY = 1;
-	unsigned long long factorialX = 1;
-	unsigned long long factorialY = 1;
+	ttmath::UInt<6> factorialXAddY = 1, factorialX = 1, factorialY = 1;
 	if (lengthX > lengthY){
 		for (int i = 2 ; i <= lengthY; i++ ){
 			factorialY *= i ;}
-		
+
 		factorialX = factorialY;
-		for (int i = lengthY; i <= lengthX; i++){
+		for (int i = lengthY+1; i <= lengthX; i++){
 			factorialX *= i;}
-		
+
 		factorialXAddY = factorialX;
 		int limit = lengthX + lengthY;
-		for (int i = lengthX; i <= limit; i++){
+		for (int i = lengthX+1; i <= limit; i++){
 			factorialXAddY *= i;
 		}
 	}else {
 		for (int i = 2 ; i <= lengthX; i++ ){
 			factorialX *= i ;}
-		
+
 		factorialY = factorialX;
-		for (int i = lengthX; i <= lengthY; i++){
+		for (int i = lengthX+1; i <= lengthY; i++){
 			factorialY *= i;}
-		
+
 		factorialXAddY = factorialY;
 		int limit = lengthX + lengthY;
-		for (int i = lengthY; i <= limit; i++){
+		for (int i = lengthY+1; i <= limit; i++){
 			factorialXAddY *= i;
 		}
-		
+
 	}
-	return factorialXAddY / (factorialX * factorialY) ;
+	return factorialXAddY / (factorialX * factorialY);
 }
 
 
 
 int main()
 {
-    unsigned long long solution;
-    
+    ttmath::UInt<6> solution = 0;
+
     solution = latticePathOptimized(20,20);
     //solution = latticePath(20,20);
-    printf("Solution = %llu", solution );
-    
+    cout << solution;
     return 0;
 }
