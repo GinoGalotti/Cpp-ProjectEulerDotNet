@@ -63,7 +63,7 @@ day addYear(day baseDay, int numYear){
                 newDay.month,
                 newDay.year +1};
    }else {
-    newDay = {(newDay.weekDay + 2) % 7,
+    newDay = {(newDay.weekDay + 1) % 7,
                 newDay.dayOfMonth,
                 newDay.month,
                 newDay.year +1};}}
@@ -82,24 +82,24 @@ day addMonth(day baseDay, int numMonths){
             if (isLeapYear(newDay.year)) {
                 newDay = {(newDay.weekDay + 1)%7,
                 newDay.dayOfMonth,
-                newDay.month + 1,
+                2,
                 newDay.year};
             }else {
                 newDay = {newDay.weekDay,
                 newDay.dayOfMonth,
-                newDay.month + 1,
+                2,
                 newDay.year};
-            }}else if(newDay.month == 0 or newDay.month == 4 or newDay.month == 6 or newDay.month == 7 or newDay.month == 9){
+            }}else if(newDay.month == 0 or newDay.month == 2 or newDay.month == 4 or newDay.month == 6 or newDay.month == 7 or newDay.month == 9){
                newDay = {(newDay.weekDay + 3)%7,
                newDay.dayOfMonth,
                newDay.month + 1,
                newDay.year};
-        } else{
-            newDay = {(newDay.weekDay + 2)%7,
-            newDay.dayOfMonth,
-            newDay.month + 1,
-            newDay.year};
-        }
+                } else{
+                    newDay = {(newDay.weekDay + 2)%7,
+                    newDay.dayOfMonth,
+                    newDay.month + 1,
+                    newDay.year};
+                }
     }
 
     return newDay;
@@ -109,25 +109,29 @@ day addWeek(day baseDay, int numWeek){
     day newDay = baseDay;
     for (int i = 0; i < numWeek; i++ ){
     if (newDay.month == 1 and isLeapYear(newDay.year)){
-           if (newDay.dayOfMonth + 7 >= maxDaysInMoth[1]){
+           if (newDay.dayOfMonth + 7 > maxDaysInMoth[1]){
                 newDay = {newDay.weekDay,
-                (newDay.dayOfMonth + 7) % (maxDaysInMoth[1] + 1),
-                newDay.month + 1,
+                (newDay.dayOfMonth + 7) % (maxDaysInMoth[1]+1),
+                2,
                 newDay.year};
-           }}else{
-                if (newDay.month == 11 and newDay.dayOfMonth + 7 >= 30 ){
+           }else
+                newDay = {newDay.weekDay,
+                newDay.dayOfMonth + 7,
+                1,
+                newDay.year};}else{
+                if (newDay.month == 11 and newDay.dayOfMonth + 7 >= 31 ){
                     newDay = {newDay.weekDay,
                     ((newDay.dayOfMonth + 7) % 30),
                     0,
                     newDay.year +1 };
-                }else if (newDay.dayOfMonth + 7 >= maxDaysInMoth[newDay.month] - 1){
+                }else if (newDay.dayOfMonth + 7 >= maxDaysInMoth[newDay.month]){
                     newDay = {newDay.weekDay,
-                    (newDay.dayOfMonth + 7) % (maxDaysInMoth[newDay.month] - 1),
+                    (newDay.dayOfMonth + 7) % (maxDaysInMoth[newDay.month]),
                     newDay.month + 1,
                     newDay.year}; }
                     else {
                     newDay = {newDay.weekDay,
-                    (newDay.dayOfMonth + 7) % (maxDaysInMoth[newDay.month] - 1),
+                    newDay.dayOfMonth + 7,
                     newDay.month,
                     newDay.year};}} }
 
@@ -138,25 +142,31 @@ day addDay(day baseDay, int numDays){
     day newDay = baseDay;
     for (int i = 0; i < numDays; i++ ){
     if (newDay.month == 1 and isLeapYear(newDay.year)){
-           if (newDay.dayOfMonth + 1 >= maxDaysInMoth[1]){
+           if (newDay.dayOfMonth == maxDaysInMoth[1]){
                 newDay = {(newDay.weekDay +1) % 7,
-                (newDay.dayOfMonth + 1) % (maxDaysInMoth[1] + 1),
+                0,
                 newDay.month + 1,
                 newDay.year};
+           }else {
+                newDay = {(newDay.weekDay +1) % 7,
+                newDay.dayOfMonth,
+                newDay.month,
+                newDay.year};
+
            }}else{
-                if (newDay.month == 11 and newDay.dayOfMonth + 1 >= 30 ){
+                if (newDay.month == 11 and newDay.dayOfMonth + 1 >= 31 ){
                     newDay = {(newDay.weekDay +1) % 7,
-                    ((newDay.dayOfMonth + 1) % 30),
+                    0,
                     0,
                     newDay.year +1 };
-                }else if (newDay.dayOfMonth + 1 >= maxDaysInMoth[newDay.month] - 1){
+                }else if (newDay.dayOfMonth + 1 >= maxDaysInMoth[newDay.month]){
                     newDay = {(newDay.weekDay +1) % 7 ,
-                    (newDay.dayOfMonth + 1) % (maxDaysInMoth[newDay.month] - 1),
+                    0,
                     newDay.month + 1,
                     newDay.year}; }
                     else {
                     newDay = {(newDay.weekDay +1) % 7,
-                    (newDay.dayOfMonth + 1) % (maxDaysInMoth[newDay.month] - 1),
+                    newDay.dayOfMonth + 1 ,
                     newDay.month,
                     newDay.year};}} }
 
@@ -170,21 +180,15 @@ int main()
     bool continuar = false;
 
     actualDay = addYear(actualDay, 1);
-    int contMonday = 0;
-    for (int i = 0; i < 100; i++){
+    int contFirstMonday = 0;
+    day dayAux = actualDay;
+    bool isNot2001 = dayAux.year == 2001;
+    while (!isNot2001){
+        if (dayAux.weekDay == 6) contFirstMonday++;
+        dayAux = addMonth(dayAux, 1);
+        isNot2001 = dayAux.year == 2001;
+        }
 
-        day dayAux = actualDay;
-        bool isMonday = dayAux.weekDay == 0;
-        while (!isMonday){
-            dayAux = addDay(dayAux, 1);
-            isMonday = dayAux.weekDay == 0;
-            }
-        contMonday = contMonday + 4;
-        dayAux = addWeek(dayAux, 4);
-        if (dayAux.month == 0) contMonday++;
-
-        actualDay = addYear(actualDay,1);
-    }
-    printf("Solution = %i",contMonday);
+    printf("Solution = %i",contFirstMonday);
     return 0;
 }
