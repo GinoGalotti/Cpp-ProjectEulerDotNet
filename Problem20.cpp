@@ -1,17 +1,12 @@
 /**
  * Solution by Luis Galotti
  * NOTE: I'm using TTMath library to deal with really big integer numbers. You can find more information about it at: http://www.ttmath.org/
- * You are given the following information, but you may prefer to do some research for yourself.
+ * n! means n × (n − 1) × ... × 3 × 2 × 1
 
-1 Jan 1900 was a Monday.
-Thirty days has September,
-April, June and November.
-All the rest have thirty-one,
-Saving February alone,
-Which has twenty-eight, rain or shine.
-And on leap years, twenty-nine.
-A leap year occurs on any year evenly divisible by 4, but not on a century unless it is divisible by 400.
-How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?
+For example, 10! = 10 × 9 × ... × 3 × 2 × 1 = 3628800,
+and the sum of the digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
+
+Find the sum of the digits in the number 100!
 */
 
 #include <string>
